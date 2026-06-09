@@ -1,5 +1,9 @@
 package com.project.code.Model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 @Entity
 public class Customer {
 
@@ -67,7 +71,7 @@ public class Customer {
     public String getPhone(){
         return phone;
     }
-    public void setPhone(Stirng phone){
+    public void setPhone(String phone){
         this.phone = phone;
     }
 // 7. Ensure to use proper annotations and validate constraints:

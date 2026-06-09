@@ -1,5 +1,10 @@
 package com.project.code.Model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 @Entity
 public class Store {
 
@@ -15,7 +20,7 @@ public class Store {
 //    - Type: private String
 //    - This field cannot be empty, use the @NotNull annotation to enforce this rule.
     @NotNull
-    private String Name;
+    private String name;
 // 3. Add 'address' field:
 //    - Type: private String
 //    - This field cannot be empty, use the @NotNull and @NotBlank annotations to enforce this rule.
@@ -26,8 +31,8 @@ public class Store {
 //    - **Inventory**: A store can have multiple inventory entries.
 //    - Use @OneToMany(mappedBy = "store") to reflect the one-to-many relationship with Inventory.
 //    - Use @JsonManagedReference("inventory-store") to manage bidirectional relationships and avoid circular references.
-    @OneToMany(mappedBy = "store")
-    @JsonManagedReference("inventory-store")
+@OneToMany(mappedBy = "store")
+@JsonManagedReference("inventory-store")
 // 5. Add constructor:
 //    - Create a constructor that accepts name and address as parameters to initialize the Store object.
     public Store(String name, String address){

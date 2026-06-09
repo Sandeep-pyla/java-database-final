@@ -95,7 +95,7 @@ public class OrderDetails {
     public double getTotalPrice(){
         return totalPrice;
     }
-    public void setTotalPrice(double TotalPrice){
+    public void setTotalPrice(double totalPrice){
         this.totalPrice = totalPrice;
     }
     public LocalDateTime getDate(){

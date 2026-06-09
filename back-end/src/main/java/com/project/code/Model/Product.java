@@ -1,5 +1,9 @@
 package com.project.code.Model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
 @Entity
 public class Product {
 
@@ -32,7 +36,7 @@ public class Product {
 //    - Use the @Table annotation with uniqueConstraints to ensure the 'sku' column is unique.
     @NotNull
     @Table(name = "product", uniqueConstraints =
-                    @UniqueConstraint(columnName="sku"))
+                    @UniqueConstraint(columnNames = {"sku"}))
     private String sku;
     
 //    Example: @Table(name = "product", uniqueConstraints = @UniqueConstraint(columnNames = "sku"))

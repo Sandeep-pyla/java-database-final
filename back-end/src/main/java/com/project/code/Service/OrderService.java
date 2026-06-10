@@ -1,6 +1,5 @@
 package com.project.code.Service;
 
-
 import com.project.code.Model.*;
 import com.project.code.Repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +7,11 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OrderService {
+public class OrderService extends Exception {
     @Autowired
     private ProductRepository productRepository;
     private InventoryRepository inventoryRepository;
@@ -24,7 +24,7 @@ public class OrderService {
 //    - Processes a customer's order, including saving the order details and associated items.
 //    - Parameters: `PlaceOrderRequestDTO placeOrderRequest` (Request data for placing an order)
 //    - Return Type: `void` (This method doesn't return anything, it just processes the order)
-    public void saveOrder(PlaceOrderRequestDTO placeOrderRequest) throws Exception{
+    public void saveOrder(PlaceOrderRequestDTO placeOrderRequest) throws RuntimeException{
 
 // 2. **Retrieve or Create the Customer**:
 //    - Check if the customer exists by their email using `findByEmail`.
@@ -43,7 +43,7 @@ public class OrderService {
 //    - Fetch the store by ID from `storeRepository`.
 //    - If the store doesn't exist, throw an exception. Use `storeRepository.findById()`.
         if(storeRepository.findByid(placeOrderRequest.getStoreId()) == null){
-            throw new RuntimeException();
+            throw new RuntimeException("Store with the given id is not present");
         }
 // 4. **Create OrderDetails**:
 //    - Create a new `OrderDetails` object and set customer, store, total price, and the current timestamp.
@@ -57,7 +57,13 @@ public class OrderService {
 // 5. **Create and Save OrderItems**:
 //    - For each product purchased, find the corresponding inventory, update stock levels, and save the changes using `inventoryRepository.save()`.
 //    - Create and save `OrderItem` for each product and associate it with the `OrderDetails` using `orderItemRepository.save()`.
-        inventoryRepository.findByProductIdandStoreId(or.getId(), placeOrderRequest.getStoreId());
-
+        for(PurchaseProductDTO i: placeOrderRequest.getPurchaseProduct()){
+            Inventory inv = inventoryRepository.findByProductIdandStoreId(i.getId(), placeOrderRequest.getStoreId());
+            inv.setStockLevel(inv.getStockLevel() - i.getQuantity());
+            inventoryRepository.save(inv);
+            OrderItem Oi = new OrderItem();
+            Oi.setOrder(or);
+            orderItemRepository.save(Oi);
+        }
     }
 }

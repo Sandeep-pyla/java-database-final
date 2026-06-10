@@ -49,7 +49,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 //      - Parameter: String name
         public Product findByName(String name);
 // Example: public Product findByName(String name);
-
+//        findById, return type Product, parameter: long id
+        public Product findByid(Long id);
 //    - **findByNameLike**:
 //      - This method will retrieve products by a name pattern for a specific store.
 //      - Return type: List<Product>

@@ -3,9 +3,9 @@ package com.project.code.Repo;
 import com.project.code.Model.Store;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface StoreRepository extends JpaRepository<Store, Long> {
 // 1. Add the repository interface:
@@ -19,7 +19,7 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
 //      - This method will retrieve a store by its ID.
 //      - Return type: Store
 //      - Parameter: Long id
-    public Optional<Store> findById(Long id);
+    public Store findByid(Long id);
 // Example: public Store findById(Long id);
 
 //    - **findBySubName**:

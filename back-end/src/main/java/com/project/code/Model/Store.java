@@ -31,8 +31,7 @@ public class Store {
 //    - **Inventory**: A store can have multiple inventory entries.
 //    - Use @OneToMany(mappedBy = "store") to reflect the one-to-many relationship with Inventory.
 //    - Use @JsonManagedReference("inventory-store") to manage bidirectional relationships and avoid circular references.
-@OneToMany(mappedBy = "store")
-@JsonManagedReference("inventory-store")
+
 // 5. Add constructor:
 //    - Create a constructor that accepts name and address as parameters to initialize the Store object.
     public Store(String name, String address){
@@ -41,7 +40,8 @@ public class Store {
     }
 // 6. Add @Entity annotation:
 //    - Use @Entity above the class name to mark it as a JPA entity.
-
+    @OneToMany(mappedBy = "store")
+    @JsonManagedReference("inventory-store")
 // 7. Add Getters and Setters:
 //    - Add getter and setter methods for all fields (id, name, address).
     public long getId(){
@@ -62,4 +62,5 @@ public class Store {
     public void setAddress(String address){
         this.address = address;
     }
+
 }

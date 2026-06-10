@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+@Table(name = "product", uniqueConstraints = @UniqueConstraint(columnNames = {"sku"}))
 @Entity
 public class Product {
 
@@ -35,9 +36,8 @@ public class Product {
 //    - This field cannot be empty, must be unique, use the @NotNull annotation to enforce this rule.
 //    - Use the @Table annotation with uniqueConstraints to ensure the 'sku' column is unique.
     @NotNull
-    @Table(name = "product", uniqueConstraints =
-                    @UniqueConstraint(columnNames = {"sku"}))
     private String sku;
+//    uniqueConstraints = @UniqueConstraint(columnNames = "sku")) - Add@Entity`
     
 //    Example: @Table(name = "product", uniqueConstraints = @UniqueConstraint(columnNames = "sku"))
 

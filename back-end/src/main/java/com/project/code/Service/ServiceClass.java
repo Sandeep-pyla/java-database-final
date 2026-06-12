@@ -17,27 +17,21 @@ public class ServiceClass {
 //    - Parameters: `Inventory inventory`
 //    - Return Type: `boolean` (Returns `false` if inventory exists, otherwise `true`)
     public boolean validateInventory(Inventory inventory){
-        if(inventoryRepository.findByProductIdandStoreId(inventory.getProduct().getId(), inventory.getStore().getId()) != null)
-            return false;
-        return true;
+        return inventoryRepository.findByProductIdandStoreId(inventory.getProduct().getId(), inventory.getStore().getId()) == null;
     }
 // 2. **validateProduct Method**:
 //    - Checks if a product exists by its name.
 //    - Parameters: `Product product`
 //    - Return Type: `boolean` (Returns `false` if a product with the same name exists, otherwise `true`)
         public boolean validateProduct(Product product){
-            if(productRepository.findByName(product.getName()) != null)
-                return false;
-            return true;
+            return productRepository.findByName(product.getName()) == null;
         }
 // 3. **ValidateProductId Method**:
 //    - Checks if a product exists by its ID.
 //    - Parameters: `long id`
 //    - Return Type: `boolean` (Returns `false` if the product does not exist with the given ID, otherwise `true`)
         public boolean ValidateProductId(long id){
-            if(productRepository.findByid(id)!=null)
-                return true;
-            return false;
+            return productRepository.findByid(id) != null;
         }
 // 4. **getInventoryId Method**:
 //    - Fetches the inventory record for a given product and store combination.

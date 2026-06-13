@@ -17,7 +17,7 @@ public class ServiceClass {
 //    - Parameters: `Inventory inventory`
 //    - Return Type: `boolean` (Returns `false` if inventory exists, otherwise `true`)
     public boolean validateInventory(Inventory inventory){
-        return inventoryRepository.findByProductIdandStoreId(inventory.getProduct().getId(), inventory.getStore().getId()) == null;
+        return inventoryRepository.findByProductIdAndStoreId(inventory.getProduct().getId(), inventory.getStore().getId()) == null;
     }
 // 2. **validateProduct Method**:
 //    - Checks if a product exists by its name.
@@ -38,6 +38,6 @@ public class ServiceClass {
 //    - Parameters: `Inventory inventory`
 //    - Return Type: `Inventory` (Returns the inventory record for the product-store combination)
         public Inventory getInventoryId(Inventory inventory){
-            return inventoryRepository.findByProductIdandStoreId(inventory.getProduct().getId(), inventory.getStore().getId());
+            return inventoryRepository.findByProductIdAndStoreId(inventory.getProduct().getId(), inventory.getStore().getId());
         }
 }

@@ -58,7 +58,7 @@ public class OrderService extends Exception {
 //    - For each product purchased, find the corresponding inventory, update stock levels, and save the changes using `inventoryRepository.save()`.
 //    - Create and save `OrderItem` for each product and associate it with the `OrderDetails` using `orderItemRepository.save()`.
         for(PurchaseProductDTO i: placeOrderRequest.getPurchaseProduct()){
-            Inventory inv = inventoryRepository.findByProductIdandStoreId(i.getId(), placeOrderRequest.getStoreId());
+            Inventory inv = inventoryRepository.findByProductIdAndStoreId(i.getId(), placeOrderRequest.getStoreId());
             inv.setStockLevel(inv.getStockLevel() - i.getQuantity());
             inventoryRepository.save(inv);
             OrderItem Oi = new OrderItem();

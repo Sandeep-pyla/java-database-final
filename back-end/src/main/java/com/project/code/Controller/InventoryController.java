@@ -115,7 +115,7 @@ public class InventoryController {
 //    - This method handles HTTP GET requests to search for products by name within a specific store.
 //    - It uses `name` and `storeId` as parameters and searches for products that match the `name` in the specified store.
 //    - The search results are returned in the response with the key `"product"`.
-    @GetMapping("search/{name}/{storeId")
+    @GetMapping("search/{name}/{storeId}")
     public Map<String, Object> searchProduct(@PathVariable("name") String name,@PathVariable("storeId") long storeId){
         return Map.of("product", productRepository.findByNameLike(storeId, name));
     }
@@ -140,7 +140,7 @@ public class InventoryController {
 //    - If sufficient stock is available, return `true`; otherwise, return `false`.
     @GetMapping("validate/{quantity}/{storeId}/{productId}")
     public boolean validateQuantity(@PathVariable("quantity") long quantity, @PathVariable("storeId") long storeId, @PathVariable("productId") long productId){
-        long availableQuantity = inventoryRepository.findByProductIdandStoreId(productId, storeId).getStockLevel();
+        long availableQuantity = inventoryRepository.findByProductIdAndStoreId(productId, storeId).getStockLevel();
         return availableQuantity >= quantity;
     }
 }

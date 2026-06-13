@@ -81,19 +81,39 @@ public class ProductController {
 //    - Use conditional filtering logic if `name` or `category` is `"null"`.
 //    - Fetch products based on category using methods like `findByCategory()` or `findProductBySubNameAndCategory()`.
 //    - Return filtered products in a `Map<String, Object>` with key `products`.
-
+    @GetMapping("/category/{name}/{category}")
+    public Map<String, Object> filterCategoryProduct(@PathVariable("name") String name, @PathVariable("category") String category){
+        Map<String, Object> output = new HashMap<>();
+        if (name == null || category == null) {
+            if(name == null){
+                output.put("products", productRepository.findByCategory(category));
+            }else{
+                output.put("products", productRepository.findProductBySubName(name));
+            }
+        }else{
+            output.put("products", productRepository.findProductBySubNameAndCategory(name,category));
+        }
+        return output;
+    }
 
  // 7. Define the `listProduct` Method:
 //    - Annotate with `@GetMapping` to handle GET requests to fetch all products.
 //    - Fetch all products using `findAll()` method from `ProductRepository`.
 //    - Return all products in a `Map<String, Object>` with key `products`.
-
-
+    @GetMapping("/allProducts")
+    public Map<String, Object> listProduct(){
+        Map<String, Object> output = new HashMap<>();
+        output.put("products", productRepository.findAll());
+        return output;
+    }
 // 8. Define the `getProductbyCategoryAndStoreId` Method:
 //    - Annotate with `@GetMapping("filter/{category}/{storeid}")` to filter products by `category` and `storeId`.
 //    - Use `findProductByCategory()` method from `ProductRepository` to retrieve products.
 //    - Return filtered products in a `Map<String, Object>` with key `product`.
-
+    @GetMapping("filter/{category}/{storeid}")
+    public Map<String, Object> getProductbyCategoyAndStoreId(@PathVariable("category") String category, @PathVariable("storeid") long storeid){
+        return Map.of("products", productRepository.findByCategoryAndStoreId(storeid, category));
+    }
 
 // 9. Define the `deleteProduct` Method:
 //    - Annotate with `@DeleteMapping("/{id}")` to handle DELETE requests for removing a product by its ID.
@@ -101,14 +121,23 @@ public class ProductController {
 //    - Remove product from `Inventory` first using `deleteByProductId(id)` in `InventoryRepository`.
 //    - Remove product from `Product` using `deleteById(id)` in `ProductRepository`.
 //    - Return a success message with key `message` indicating product deletion.
-
+    @DeleteMapping("/{id}")
+    public Map<String, String> deleteProduct(@PathVariable("id") long id){
+        if(serviceClass.ValidateProductId(id)){
+            inventoryRepository.deleteByProductId(id);
+            productRepository.deleteById(id);
+            return Map.of("message", "Success: product is deleted");
+        }else{
+            return Map.of("message", "ERROR: product does not exist");
+        }
+    }
 
  // 10. Define the `searchProduct` Method:
 //    - Annotate with `@GetMapping("/searchProduct/{name}")` to search for products by `name`.
 //    - Use `findProductBySubName()` method from `ProductRepository` to search products by name.
 //    - Return search results in a `Map<String, Object>` with key `products`.
-
-
-  
-    
+    @GetMapping("/searchProduct/{name}")
+    public Map<String, Object> searchProduct(@PathVariable("name") String name){
+        return Map.of("products", productRepository.findProductBySubName(name));
+    }
 }
